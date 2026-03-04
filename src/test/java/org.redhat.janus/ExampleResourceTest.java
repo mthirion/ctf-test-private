@@ -9,7 +9,6 @@ import static org.hamcrest.CoreMatchers.is;
 @QuarkusTest
 public class ExampleResourceTest {
 
-    private String toto="toto";
     private String michael="{\"id\": \"1\", \"name\": \"Michael\", \"lastname\": \"Thirion\", \"email\": \"mthirion@redhat.com\"}";
     private String rachid="{\"id\": \"2\", \"name\": \"Rachid\", \"lastname\": \"Snoussi\", \"email\": \"snoussi@redhat.com\"}";
 
@@ -19,7 +18,7 @@ public class ExampleResourceTest {
                 .when().get("/customers/1")
                 .then()
                 .statusCode(200)
-                .body(is(toto));
+                .body(is(michael));
     }
 
 }
