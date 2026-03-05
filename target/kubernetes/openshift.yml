@@ -1,0 +1,133 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    app.openshift.io/vcs-uri: https://github.com/mthirion/ctf-test-private
+    app.quarkus.io/quarkus-version: 3.8.6.redhat-00004
+    app.quarkus.io/commit-id: d2d7f8301177f19e76c8063a9102c0535226bda3
+    app.quarkus.io/vcs-uri: https://github.com/mthirion/ctf-test-private.git
+    app.quarkus.io/build-timestamp: 2026-03-05 - 10:25:52 +0000
+  labels:
+    app.kubernetes.io/name: customers
+    app.kubernetes.io/version: 1.0-SNAPSHOT
+    app.kubernetes.io/managed-by: quarkus
+    app.openshift.io/runtime: quarkus
+  name: customers
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 8090
+  selector:
+    app.kubernetes.io/name: customers
+    app.kubernetes.io/version: 1.0-SNAPSHOT
+  type: ClusterIP
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app.kubernetes.io/name: customers
+    app.kubernetes.io/version: 1.0-SNAPSHOT
+  name: s2i-java
+spec:
+  dockerImageRepository: fabric8/s2i-java
+  lookupPolicy:
+    local: true
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  annotations:
+    app.openshift.io/vcs-uri: https://github.com/mthirion/ctf-test-private
+    app.quarkus.io/quarkus-version: 3.8.6.redhat-00004
+    app.quarkus.io/commit-id: d2d7f8301177f19e76c8063a9102c0535226bda3
+    app.quarkus.io/vcs-uri: https://github.com/mthirion/ctf-test-private.git
+    app.quarkus.io/build-timestamp: 2026-03-05 - 10:25:52 +0000
+  labels:
+    app.kubernetes.io/name: customers
+    app.kubernetes.io/version: 1.0-SNAPSHOT
+    app.kubernetes.io/managed-by: quarkus
+    app.openshift.io/runtime: quarkus
+  name: customers
+spec:
+  lookupPolicy:
+    local: true
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+    app.openshift.io/vcs-uri: https://github.com/mthirion/ctf-test-private
+    app.quarkus.io/quarkus-version: 3.8.6.redhat-00004
+    app.quarkus.io/commit-id: d2d7f8301177f19e76c8063a9102c0535226bda3
+    app.quarkus.io/vcs-uri: https://github.com/mthirion/ctf-test-private.git
+    app.quarkus.io/build-timestamp: 2026-03-05 - 10:25:52 +0000
+  labels:
+    app.kubernetes.io/name: customers
+    app.kubernetes.io/version: 1.0-SNAPSHOT
+    app.kubernetes.io/managed-by: quarkus
+    app.openshift.io/runtime: quarkus
+  name: customers
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: customers:1.0-SNAPSHOT
+  source:
+    binary: {}
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: s2i-java:2.3
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    app.openshift.io/vcs-uri: https://github.com/mthirion/ctf-test-private
+    app.quarkus.io/quarkus-version: 3.8.6.redhat-00004
+    app.quarkus.io/commit-id: d2d7f8301177f19e76c8063a9102c0535226bda3
+    app.quarkus.io/vcs-uri: https://github.com/mthirion/ctf-test-private.git
+    app.quarkus.io/build-timestamp: 2026-03-05 - 10:25:52 +0000
+  labels:
+    app.kubernetes.io/managed-by: quarkus
+    app.openshift.io/runtime: quarkus
+    app.kubernetes.io/name: customers
+    app.kubernetes.io/version: 1.0-SNAPSHOT
+  name: customers
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: customers
+      app.kubernetes.io/version: 1.0-SNAPSHOT
+  template:
+    metadata:
+      annotations:
+        alpha.image.policy.openshift.io/resolve-names: '*'
+        app.openshift.io/vcs-uri: https://github.com/mthirion/ctf-test-private
+        app.quarkus.io/quarkus-version: 3.8.6.redhat-00004
+        app.quarkus.io/commit-id: d2d7f8301177f19e76c8063a9102c0535226bda3
+        app.quarkus.io/vcs-uri: https://github.com/mthirion/ctf-test-private.git
+        app.quarkus.io/build-timestamp: 2026-03-05 - 10:25:52 +0000
+      labels:
+        app.kubernetes.io/managed-by: quarkus
+        app.openshift.io/runtime: quarkus
+        app.kubernetes.io/name: customers
+        app.kubernetes.io/version: 1.0-SNAPSHOT
+    spec:
+      containers:
+        - env:
+            - name: JAVA_APP_JAR
+              value: /deployments/quarkus-run.jar
+          image: customers:1.0-SNAPSHOT
+          imagePullPolicy: Always
+          name: customers
+          ports:
+            - containerPort: 8090
+              name: http
+              protocol: TCP

@@ -1,9 +1,9 @@
-package org.redhat.janus;
+package org.redhat.ctf;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class DebugState {
+public class OperateHack {
 
     private boolean debug = false;
     private boolean trigger = false;

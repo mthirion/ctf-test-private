@@ -1,0 +1,64 @@
+---
+openapi: 3.0.3
+info:
+  title: customers API
+  version: 1.0-SNAPSHOT
+servers:
+- url: http://localhost:8090
+  description: Auto generated value
+- url: http://0.0.0.0:8090
+  description: Auto generated value
+paths:
+  /customers:
+    get:
+      tags:
+      - Customers
+      parameters:
+      - name: X-PORT
+        in: header
+        schema:
+          type: string
+      - name: X-TRIGGER
+        in: header
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+    options:
+      tags:
+      - Customers
+      parameters:
+      - name: debug
+        in: query
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+      deprecated: true
+  /customers/{id}:
+    get:
+      tags:
+      - Customers
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
