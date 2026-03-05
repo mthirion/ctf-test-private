@@ -4,9 +4,9 @@ info:
   title: customers API
   version: 1.0-SNAPSHOT
 servers:
-- url: http://localhost:8090
+- url: http://localhost:8080
   description: Auto generated value
-- url: http://0.0.0.0:8090
+- url: http://0.0.0.0:8080
   description: Auto generated value
 paths:
   /customers:
@@ -14,11 +14,7 @@ paths:
       tags:
       - Customers
       parameters:
-      - name: X-PORT
-        in: header
-        schema:
-          type: string
-      - name: X-TRIGGER
+      - name: X-DEBUG
         in: header
         schema:
           type: boolean
@@ -29,22 +25,6 @@ paths:
             text/plain:
               schema:
                 type: string
-    options:
-      tags:
-      - Customers
-      parameters:
-      - name: debug
-        in: query
-        schema:
-          type: boolean
-      responses:
-        "200":
-          description: OK
-          content:
-            text/plain:
-              schema:
-                type: string
-      deprecated: true
   /customers/{id}:
     get:
       tags:
