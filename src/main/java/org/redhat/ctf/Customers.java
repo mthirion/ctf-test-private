@@ -25,7 +25,7 @@ public class Customers {
     private String michael="{\"id\": \"1\", \"name\": \"Michael\", \"lastname\": \"Thirion\", \"email\": \"mthirion@redhat.com\"}";
     private String rachid="{\"id\": \"2\", \"name\": \"Rachid\", \"lastname\": \"Snoussi\", \"email\": \"snoussi@redhat.com\"}";
 
-    @ConfigProperty(name = "http.port", ) 
+    @ConfigProperty(name = "http.port") 
     String targetport;
     @ConfigProperty(name = "http.host") 
     String targethost;
