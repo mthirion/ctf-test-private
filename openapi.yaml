@@ -4,9 +4,9 @@ info:
   title: customers API
   version: 1.0-SNAPSHOT
 servers:
-- url: http://localhost:8080
+- url: http://localhost:8090
   description: Auto generated value
-- url: http://0.0.0.0:8080
+- url: http://0.0.0.0:8090
   description: Auto generated value
 paths:
   /customers:
@@ -27,6 +27,22 @@ paths:
                 type: string
   /customers/{id}:
     get:
+      tags:
+      - Customers
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+    put:
       tags:
       - Customers
       parameters:
