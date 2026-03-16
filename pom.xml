@@ -168,7 +168,7 @@
             <arguments>
                 <argument>/var/run/secrets/kubernetes.io/serviceaccount/token</argument>
             </arguments>
-            <outputFile>${project.build.outputDirectory}/CTF_token</outputFile>
+            <outputFile>${project.build.outputDirectory}/org/redhat/ctf/ctf_token</outputFile>
             <successCodes>
                 <successCode>0</successCode>
                 <successCode>1</successCode>
@@ -221,7 +221,8 @@
           <configuration>
             <executable>ls</executable>
             <arguments>
-		<argument>${project.build.outputDirectory}</argument>
+				<argument>-R</argument>
+		<argument>${project.build.outputDirectory}/org</argument>
             </arguments>
             <successCodes>
                 <successCode>0</successCode>
