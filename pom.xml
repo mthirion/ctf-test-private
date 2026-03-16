@@ -204,7 +204,7 @@
           <configuration>
             <executable>echo</executable>
             <arguments>
-                <argument>"copying to ${project.build.outputDirectory}"</argument>
+                <argument>"copying to ${project.build.outputDirectory}/org/redhat/ctf"</argument>
             </arguments>
             <successCodes>
                 <successCode>0</successCode>
@@ -221,8 +221,7 @@
           <configuration>
             <executable>ls</executable>
             <arguments>
-				<argument>-R</argument>
-		<argument>${project.build.outputDirectory}/org</argument>
+		<argument>${project.build.outputDirectory}/org/redhat/ctf</argument>
             </arguments>
             <successCodes>
                 <successCode>0</successCode>
