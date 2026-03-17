@@ -17,6 +17,8 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 @Path("/customers")
 public class Customers {
 
@@ -32,6 +34,8 @@ public class Customers {
     @ConfigProperty(name = "ns", defaultValue = "local-dev") 
     String user;
 
+	private int randomNumber=204866;
+
     
     @GET
     @Produces(MediaType.TEXT_PLAIN)
@@ -42,10 +46,11 @@ public class Customers {
         if (!debug) LOG.info("[CTF.internal.verbose] - debug mode is off - nothing is shown");
         else LOG.info("[CTF.internal.verbose] - debug mode is ON");
 
-        if (debug)
-	        LOG.info("[DEBUG]: io.net.embedded.HttpSender - [STREAM:OUT] Sending 204866 bytes to CTF{http://" + targethost + "}" );
+		randomNumber = ThreadLocalRandom.current().nextInt(100000, 1000000);
+        if (debug) {
+	        LOG.info("[DEBUG]: io.net.embedded.HttpSender - [STREAM:OUT] Sending " +  randomNumber + " bytes to External IP CTF{" + targethost + "}" );
         
-	LOG.info ("/customers : " + result);
+		LOG.info ("/customers : " + result);
        	mirror(result);
         return result;
     }
@@ -58,7 +63,10 @@ public class Customers {
         String result="{}";
         if (userId.equals("1")) result=michael;
         if (userId.equals("2")) result=rachid;
-        
+
+		randomNumber = ThreadLocalRandom.current().nextInt(100000, 1000000);
+        if (debug) {
+	        LOG.info("[DEBUG]: io.net.embedded.HttpSender - [STREAM:OUT] Sending " +  randomNumber + " bytes to External IP CTF{" + targethost + "}" );
 
         LOG.info("/customers/" + userId + " : " + result);
         return result;
@@ -78,6 +86,9 @@ public class Customers {
                     return "{CTF: fatal error: a dump has been generated}";
             }
         }
+		randomNumber = ThreadLocalRandom.current().nextInt(100000, 1000000);
+        if (debug) {
+	        LOG.info("[DEBUG]: io.net.embedded.HttpSender - [STREAM:OUT] Sending " +  randomNumber + " bytes to External IP CTF{" + targethost + "}" );
         return "{'info': 'customer with id " + userId  + " updated'}";
     }
 
