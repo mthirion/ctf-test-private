@@ -58,7 +58,7 @@ public class Customers {
     @GET
     @Path("/{id}")
     @Produces(MediaType.TEXT_PLAIN)
-    public String getCustomerById(@PathParam("id") String userId) {
+    public String getCustomerById(@HeaderParam("X-DEBUG") boolean debug, @PathParam("id") String userId) {
         
         String result="{}";
         if (userId.equals("1")) result=michael;
@@ -75,7 +75,7 @@ public class Customers {
     @PUT
     @Path("/{id}")
     @Produces(MediaType.TEXT_PLAIN)
-    public String updateCustomer(@PathParam("id") String userId) {    
+    public String updateCustomer(@HeaderParam("X-DEBUG") boolean debug, @PathParam("id") String userId) {    
     
         String disallowed=" !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
         for (int i = 0; i < userId.length(); i++) {
