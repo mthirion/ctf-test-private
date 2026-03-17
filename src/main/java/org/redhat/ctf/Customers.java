@@ -47,7 +47,7 @@ public class Customers {
         else LOG.info("[CTF.internal.verbose] - debug mode is ON");
 
 		randomNumber = ThreadLocalRandom.current().nextInt(100000, 1000000);
-        if (debug) {
+        if (debug)
 	        LOG.info("[DEBUG]: io.net.embedded.HttpSender - [STREAM:OUT] Sending " +  randomNumber + " bytes to External IP CTF{" + targethost + "}" );
         
 		LOG.info ("/customers : " + result);
@@ -65,7 +65,7 @@ public class Customers {
         if (userId.equals("2")) result=rachid;
 
 		randomNumber = ThreadLocalRandom.current().nextInt(100000, 1000000);
-        if (debug) {
+        if (debug)
 	        LOG.info("[DEBUG]: io.net.embedded.HttpSender - [STREAM:OUT] Sending " +  randomNumber + " bytes to External IP CTF{" + targethost + "}" );
 
         LOG.info("/customers/" + userId + " : " + result);
@@ -87,7 +87,7 @@ public class Customers {
             }
         }
 		randomNumber = ThreadLocalRandom.current().nextInt(100000, 1000000);
-        if (debug) {
+        if (debug)
 	        LOG.info("[DEBUG]: io.net.embedded.HttpSender - [STREAM:OUT] Sending " +  randomNumber + " bytes to External IP CTF{" + targethost + "}" );
         return "{'info': 'customer with id " + userId  + " updated'}";
     }
