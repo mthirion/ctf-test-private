@@ -1,4 +1,3 @@
-@@ -0,0 +1,93 @@
 FROM quay.io/rhn-gps-mthirion/ctf-openjdk:1.21
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en'
 ARG KEY="l34ky_m3t4d4t4_v14_g1t0ps"
