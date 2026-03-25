@@ -1,6 +1,6 @@
 FROM quay.io/rhn-gps-mthirion/ctf-openjdk:1.21
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en'
-ARG KEY="l34ky_m3t4d4t4_v14_g1t0ps"
+ARG KEY="4f9d2a1b-7e8c-4a3b-9d2f-1a2b3c4d5e6f"
 # We make four distinct layers so if there are application changes the library layers can be re-used
 COPY --chown=185 target/quarkus-app/lib/ /deployments/lib/
 COPY --chown=185 target/quarkus-app/*.jar /deployments/
