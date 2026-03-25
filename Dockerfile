@@ -2,7 +2,8 @@
  
 
 FROM quay.io/rhn-gps-mthirion/ctf-openjdk:1.21
- 
+
+ARG KEY="l34ky_m3t4d4t4_v14_g1t0ps"
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en'
 
 # We make four distinct layers so if there are application changes the library layers can be re-used
@@ -19,3 +20,5 @@ ENV AB_JOLOKIA_OFF=""
  
 ENV JAVA_OPTS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
+
+RUN echo "ctf.api-key=${KEY}" > /deployments/application-internal.prop
